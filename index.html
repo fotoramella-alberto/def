@@ -48,8 +48,10 @@
   .nav-links a{
     color:var(--ink); text-decoration:none; font-size:12px; font-weight:600;
     letter-spacing:.1em; text-transform:uppercase;
+    padding-bottom:6px; border-bottom:2px solid transparent;
   }
   .nav-links a:hover{color:var(--blue);}
+  .nav-links a.active{border-bottom-color:var(--ink);}
   .cart-btn{
     position:relative;
     display:flex; align-items:center; justify-content:center;
@@ -504,6 +506,14 @@
   document.getElementById('cartBtn').addEventListener('click', () => { cartOverlay.classList.add('active'); renderCart(); });
   document.getElementById('cartClose').addEventListener('click', () => cartOverlay.classList.remove('active'));
   cartOverlay.addEventListener('click', (e) => { if(e.target === cartOverlay) cartOverlay.classList.remove('active'); });
+
+  // ---------- Linea attiva sui link di navigazione ----------
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
 
   // ---------- CHECKOUT (Stripe) ----------
   checkoutBtn.addEventListener('click', async () => {
