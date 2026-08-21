@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>federicoramella — Fotografie</title>
+<!-- Liberation Sans è un font di sistema (non richiede Google Fonts) -->
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --ink:#2E4874;
+    --blue:#2E4874;
+    --stone:#A8A8A8;
+    --hairline:#E5E5E5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Liberation Sans', Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{font-family:'Liberation Sans', Arial, sans-serif;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav{
+    max-width:1400px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px;
+  }
+  .logo{
+    font-family:'Liberation Sans', Arial, sans-serif;
+    font-size:20px; font-style:normal; font-weight:700;
+    color:var(--ink);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    text-decoration:none;
+    cursor:pointer;
+  }
+  .nav-links{display:flex; gap:36px; list-style:none; align-items:center;}
+  .nav-links a{
+    color:var(--ink); text-decoration:none; font-size:12px; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .nav-links a:hover{color:var(--blue);}
+  .cart-btn{
+    position:relative;
+    display:flex; align-items:center; justify-content:center;
+    background:none; border:1px solid var(--ink);
+    width:38px; height:38px; padding:0;
+    color:var(--ink); cursor:pointer;
+  }
+  .cart-btn:hover{border-color:var(--blue);}
+  .cart-count{
+    position:absolute; top:-7px; right:-7px;
+    background:var(--ink); color:#fff;
+    border-radius:50%; width:17px; height:17px;
+    font-size:10px; line-height:17px; text-align:center;
+  }
+
+  /* ---------- FILTRI CATEGORIA ---------- */
+  .filters{
+    max-width:1400px; margin:0 auto;
+    display:flex; gap:28px;
+    padding:34px 40px 0;
+    scroll-margin-top:90px;
+  }
+  .filter-btn{
+    background:none; border:none; cursor:pointer;
+    font-family:'Liberation Sans', Arial, sans-serif;
+    font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--stone);
+    padding-bottom:8px;
+    border-bottom:2px solid transparent;
+  }
+  .filter-btn:hover{color:var(--ink);}
+  .filter-btn.active{color:var(--ink); border-bottom-color:var(--ink);}
+
+  @media (max-width:700px){
+    .filters{padding:24px 20px 0; gap:20px; flex-wrap:wrap;}
+  }
+
+  /* ---------- PHOTO LIST ---------- */
+  main{
+    max-width:1400px;
+    margin:0 auto;
+    padding:60px 40px 40px;
+  }
+  .photo-entry{
+    margin-bottom:130px;
+  }
+  .img-wrap{
+    width:100%;
+    aspect-ratio:16/9;
+    overflow:hidden;
+    background:var(--hairline);
+  }
+  .img-wrap img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 1s cubic-bezier(.2,.7,.2,1);
+  }
+  .photo-entry:hover .img-wrap img{transform:scale(1.02);}
+
+  figcaption{
+    padding-top:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    border-bottom:1px solid var(--hairline);
+    padding-bottom:22px;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+  .cap-left .num{
+    font-size:11px;
+    color:var(--stone);
+    letter-spacing:.1em;
+    margin-bottom:8px;
+    display:block;
+  }
+  .cap-left h2{
+    font-family:'Liberation Sans', Arial, sans-serif;
+    font-style:normal;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.02em;
+    font-size:clamp(20px, 2.4vw, 30px);
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .cap-left p{
+    font-size:13px;
+    color:var(--stone);
+    letter-spacing:.02em;
+  }
+  .cap-right{
+    display:flex; align-items:center; gap:16px;
+  }
+  .cap-right .price{
+    font-size:15px; font-weight:600; color:var(--ink); white-space:nowrap;
+  }
+  .buy-btn{
+    font-family:'Liberation Sans', Arial, sans-serif;
+    font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase;
+    background:var(--ink); color:#fff;
+    border:none; padding:11px 20px;
+    cursor:pointer;
+    transition:background .2s ease;
+    white-space:nowrap;
+  }
+  .buy-btn:hover{background:#22375C;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:1400px; margin:0 auto;
+    padding:60px 40px 80px;
+    border-top:1px solid var(--hairline);
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:16px;
+    scroll-margin-top:90px;
+  }
+  footer a{
+    color:var(--ink); text-decoration:none;
+    border-bottom:1px solid var(--hairline);
+    font-size:16px; letter-spacing:.02em;
+  }
+  footer a:hover{border-color:var(--ink);}
+  .copyright{font-size:12px; letter-spacing:.04em; color:var(--stone); text-transform:uppercase;}
+
+  @media (max-width:700px){
+    .nav-links{display:none;}
+    main{padding:40px 20px 20px;}
+    .photo-entry{margin-bottom:64px;}
+    figcaption{flex-direction:column; align-items:flex-start; gap:8px;}
+    footer{padding:40px 20px 60px; flex-direction:column; align-items:flex-start;}
+  }
+
+  /* ---------- CART DRAWER ---------- */
+  .cart-overlay{
+    position:fixed; inset:0; background:rgba(29,28,24,.4);
+    display:none; z-index:100;
+  }
+  .cart-overlay.active{display:block;}
+  .cart-drawer{
+    position:fixed; top:0; right:0; bottom:0;
+    width:min(420px, 100%);
+    background:#fff;
+    box-shadow:-4px 0 24px rgba(0,0,0,.08);
+    display:flex; flex-direction:column;
+    transform:translateX(100%);
+    transition:transform .35s ease;
+  }
+  .cart-overlay.active .cart-drawer{transform:translateX(0);}
+  .cart-header{
+    padding:24px 28px; border-bottom:1px solid var(--hairline);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .cart-header h3{font-family:'Liberation Sans', Arial, sans-serif; font-style:italic; color:var(--blue); font-size:22px;}
+  .cart-close{background:none; border:none; font-size:22px; cursor:pointer; color:var(--stone); line-height:1;}
+  .cart-items{flex:1; overflow-y:auto; padding:16px 28px;}
+  .cart-item{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; border-bottom:1px solid var(--hairline);
+    gap:12px;
+  }
+  .cart-item-name{font-size:14px; font-weight:500;}
+  .cart-item-qty{display:flex; align-items:center; gap:8px; margin-top:6px;}
+  .qty-btn{
+    width:22px; height:22px; border:1px solid var(--hairline); background:#fff;
+    cursor:pointer; font-size:13px; line-height:1;
+  }
+  .cart-item-price{font-size:14px; font-weight:600; white-space:nowrap;}
+  .cart-remove{background:none; border:none; color:var(--stone); font-size:12px; cursor:pointer; text-decoration:underline; margin-top:6px;}
+  .cart-empty{color:var(--stone); font-size:14px; padding:40px 0; text-align:center;}
+
+  .cart-footer{border-top:1px solid var(--hairline); padding:20px 28px 28px;}
+  .shipping-options{margin-bottom:16px;}
+  .shipping-options label{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:13px; padding:8px 0; cursor:pointer;
+  }
+  .totals-row{display:flex; justify-content:space-between; font-size:13px; color:var(--stone); padding:3px 0;}
+  .totals-row.total{font-size:16px; font-weight:600; color:var(--ink); padding-top:10px; border-top:1px solid var(--hairline); margin-top:8px;}
+  .checkout-btn{
+    width:100%; margin-top:18px;
+    background:var(--blue); color:#fff; border:none;
+    padding:14px; font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase;
+    cursor:pointer;
+  }
+  .checkout-btn:hover{background:#1D2E52;}
+  .checkout-btn:disabled{background:var(--hairline); color:var(--stone); cursor:not-allowed;}
+  .checkout-note{font-size:11.5px; color:var(--stone); margin-top:10px; text-align:center;}
+
+  /* ---------- CHI SONO ---------- */
+  .about{
+    max-width:760px; margin:0 auto; padding:80px 40px;
+    border-top:1px solid var(--hairline);
+    scroll-margin-top:90px;
+  }
+  .about h2{
+    font-family:'Liberation Sans', Arial, sans-serif;
+    font-size:14px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink); margin-bottom:24px;
+  }
+  .about p{
+    font-size:16px; line-height:1.7; color:var(--ink);
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="nav">
+    <a href="#" class="logo">federicoramella</a>
+    <ul class="nav-links">
+      <li><a href="#top">Home</a></li>
+      <li><a href="#filters">Galleria</a></li>
+      <li><a href="#about">Chi sono</a></li>
+      <li><a href="stampa.html">Stampa e cornice</a></li>
+      <li><a href="#contatti">Contatti</a></li>
+      <li><button class="cart-btn" id="cartBtn" aria-label="Carrello">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button></li>
+    </ul>
+  </div>
+</header>
+
+<nav class="filters" id="filters">
+  <button class="filter-btn active" data-cat="Tutte">Tutte</button>
+  <button class="filter-btn" data-cat="Vele">Vele</button>
+  <button class="filter-btn" data-cat="Paesaggi">Paesaggi</button>
+  <button class="filter-btn" data-cat="Cetacei">Cetacei</button>
+</nav>
+
+<main id="grid"></main>
+
+<section class="about" id="about">
+  <h2>Chi sono</h2>
+  <p>Sono un fotografo, dal 1986 seguo le regate veliche di imbarcazioni d'epoca.
+  Ho pubblicato su diverse riviste del settore, e su libri edizione Gribaudo </p>
+</section>
+
+<footer id="contatti">
+  <a href="mailto:fotoramella@gmail.com">fotoramella@gmail.com</a>
+  <span class="copyright">Tutti i diritti riservati © 2026 — federicoramella</span>
+</footer>
+
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-drawer">
+    <div class="cart-header">
+      <h3>Il tuo carrello</h3>
+      <button class="cart-close" id="cartClose">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="shipping-options">
+        <label><span>Italia</span><span>€ 8,00</span><input type="radio" name="shipping" value="8" data-label="Italia" checked style="display:none"></label>
+        <label><span>Europa</span><span>€ 18,00</span><input type="radio" name="shipping" value="18" data-label="Europa" style="display:none"></label>
+        <label><span>Resto del mondo</span><span>€ 30,00</span><input type="radio" name="shipping" value="30" data-label="Resto del mondo" style="display:none"></label>
+      </div>
+      <div class="totals-row"><span>Subtotale</span><span id="subtotalVal">€ 0,00</span></div>
+      <div class="totals-row"><span>Spedizione</span><span id="shippingVal">€ 8,00</span></div>
+      <div class="totals-row total"><span>Totale</span><span id="totalVal">€ 0,00</span></div>
+      <button class="checkout-btn" id="checkoutBtn" disabled>Paga con carta</button>
+      <p class="checkout-note">Pagamento sicuro gestito da Stripe. Le fotografie vengono stampate, incorniciate e spedite dopo la conferma dell'ordine.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modifica qui titolo, sottotitolo/genere, prezzo (in euro) e immagine di ogni fotografia.
+  // "img" è il seed usato per l'immagine segnaposto: sostituiscilo con il percorso della tua foto reale (es. "foto/nome-file.jpg").
+  const works = [
+    {title:"Regata a vela", info:"Tuiga 1908 (william Fife 15 mt stazza internazionale)", price:150, img:"webp/FED1.webp", category:"Vele"},
+    {title:"Equipaggio in regata", info:"Vela — Mediterraneo", price:150, img:"webp/FED2.webp", category:"Vele"},
+    {title:"Avel 1896", info:"Vela — Mediterraneo", price:150, img:"webp/FED3.webp", category:"Vele"},
+    {title:"Veliero al largo della costa", info:"Vela — Liguria, IT", price:150, img:"webp/FED4.webp", category:"Vele"},
+    {title:"Tuiga", info:"Genere — Luogo", price:150, img:"webp/FED5.webp", category:"Vele"},
+    {title:"Oriole 1905 Nathanael Greene Herreshoff ", info:"Genere — Luogo", price:150, img:"webp/FED6.webp", category:"Vele"},
+    {title:"Tuiga", info:"Genere — Luogo", price:150, img:"webp/FED7.webp", category:"Vele"},
+    {title:"Lulù 1897 cantiere Texier progetto Rabot", info:"Genere — Luogo", price:150, img:"webp/FED8.webp", category:"Vele"},
+    {title:"The blue Peter", info:"Genere — Luogo", price:150, img:"webp/FED21.webp", category:"Vele"},
+    {title:"Halloween 1926 William Fife & Son", info:"Genere — Luogo", price:150, img:"webp/FED10.webp", category:"Vele"},
+    {title:"Dorade 1930 Sparkman & Stephens", info:"Genere — Luogo", price:150, img:"webp/FED11.webp", category:"Vele"},
+    {title:"Moonbeam III 1903 William Fife", info:"Genere — Luogo", price:150, img:"webp/FED12.webp", category:"Vele"},
+    {title:"Eilean 1936 William Fife ", info:"Genere — Luogo", price:150, img:"webp/FED13.webp", category:"Vele"},
+    {title:"Eilean 1936 William Fife", info:"Genere — Luogo", price:150, img:"webp/FED14.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED15.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED16.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED17.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED18.webp", category:"Vele"},
+    {title:"Veronique Glascow 1907 Luke & Co. ad Hamble", info:"Genere — Luogo", price:150, img:"webp/FED19.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED20.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED23.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED22.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED24.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED25.webp", category:"Vele"},
+    {title:"Pen Duick 1898 William Fife III", info:"Genere — Luogo", price:150, img:"webp/FED26.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED27.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED28.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED29.webp", category:"Vele"},
+    {title:"", info:"", price:150, img:"webp/FED30.webp", category:"Vele"},
+    {title:"Thendara 1937 Alexander Stephen & Sons", info:"Genere — Luogo", price:150, img:"webp/FED31.webp", category:"Vele"},
+    // ---- PAESAGGI: sostituisci titolo, info, prezzo e img con le tue foto ----
+    {title:"", info:"Paesaggio — Luogo", price:150, img:"paesaggio1", category:"Paesaggi"},
+    {title:"", info:"Paesaggio — Luogo", price:150, img:"paesaggio2", category:"Paesaggi"},
+    {title:"", info:"Paesaggio — Luogo", price:150, img:"paesaggio3", category:"Paesaggi"},
+    // ---- CETACEI: sostituisci titolo, info, prezzo e img con le tue foto ----
+    {title:"", info:"Cetacei — Luogo", price:150, img:"cetaceo1", category:"Cetacei"},
+    {title:"", info:"Cetacei — Luogo", price:150, img:"cetaceo2", category:"Cetacei"},
+    {title:"", info:"Cetacei — Luogo", price:150, img:"cetaceo3", category:"Cetacei"},
+  ];
+  const grid = document.getElementById('grid');
+
+  function renderGrid(filterCat){
+    grid.innerHTML = '';
+    const filtered = filterCat === 'Tutte' ? works : works.filter(w => w.category === filterCat);
+    filtered.forEach((w) => {
+      const i = works.indexOf(w);
+      const fig = document.createElement('figure');
+      fig.className = 'photo-entry';
+      fig.innerHTML = `
+        <div class="img-wrap">
+          <img src="${w.img.includes('.') ? w.img : 'https://picsum.photos/seed/'+w.img+'/1920/1080'}" alt="${w.title}" loading="lazy">
+        </div>
+        <figcaption>
+          <div class="cap-left">
+            <span class="num">${String(filtered.indexOf(w)+1).padStart(2,'0')} / ${String(filtered.length).padStart(2,'0')}</span>
+            <h2>${w.title}</h2>
+            <p>${w.info}</p>
+          </div>
+          <div class="cap-right">
+            <span class="price">€ ${w.price.toFixed(2)}</span>
+            <button class="buy-btn" data-idx="${i}">Acquista</button>
+          </div>
+        </figcaption>
+      `;
+      grid.appendChild(fig);
+    });
+  }
+
+  renderGrid('Tutte');
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGrid(btn.dataset.cat);
+    });
+  });
+
+  // ---------- CARRELLO ----------
+  let cart = []; // {title, price, qty}
+
+  const cartOverlay = document.getElementById('cartOverlay');
+  const cartItemsEl = document.getElementById('cartItems');
+  const cartCountEl = document.getElementById('cartCount');
+  const subtotalVal = document.getElementById('subtotalVal');
+  const shippingVal = document.getElementById('shippingVal');
+  const totalVal = document.getElementById('totalVal');
+  const checkoutBtn = document.getElementById('checkoutBtn');
+
+  function fmt(n){ return '€ ' + n.toFixed(2).replace('.', ','); }
+
+  function getShipping(){
+    const sel = document.querySelector('input[name="shipping"]:checked');
+    return {cost: parseFloat(sel.value), label: sel.dataset.label};
+  }
+
+  function renderCart(){
+    cartItemsEl.innerHTML = '';
+    if(cart.length === 0){
+      cartItemsEl.innerHTML = '<p class="cart-empty">Il carrello è vuoto</p>';
+    }
+    let subtotal = 0;
+    let count = 0;
+    cart.forEach((item, idx) => {
+      subtotal += item.price * item.qty;
+      count += item.qty;
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `
+        <div>
+          <div class="cart-item-name">${item.title}</div>
+          <div class="cart-item-qty">
+            <button class="qty-btn" data-action="dec" data-idx="${idx}">-</button>
+            <span>${item.qty}</span>
+            <button class="qty-btn" data-action="inc" data-idx="${idx}">+</button>
+          </div>
+          <button class="cart-remove" data-action="remove" data-idx="${idx}">Rimuovi</button>
+        </div>
+        <div class="cart-item-price">${fmt(item.price * item.qty)}</div>
+      `;
+      cartItemsEl.appendChild(row);
+    });
+    const shipping = getShipping();
+    const total = subtotal + (cart.length ? shipping.cost : 0);
+    subtotalVal.textContent = fmt(subtotal);
+    shippingVal.textContent = fmt(shipping.cost);
+    totalVal.textContent = fmt(total);
+    cartCountEl.textContent = count;
+    checkoutBtn.disabled = cart.length === 0;
+  }
+
+  document.getElementById('grid').addEventListener('click', (e) => {
+    if(e.target.matches('.buy-btn')){
+      const idx = parseInt(e.target.dataset.idx);
+      const w = works[idx];
+      const existing = cart.find(c => c.title === w.title);
+      if(existing){ existing.qty += 1; } else { cart.push({title:w.title, price:w.price, qty:1}); }
+      renderCart();
+      cartOverlay.classList.add('active');
+    }
+  });
+
+  cartItemsEl.addEventListener('click', (e) => {
+    const idx = e.target.dataset.idx;
+    if(idx === undefined) return;
+    const action = e.target.dataset.action;
+    if(action === 'inc') cart[idx].qty += 1;
+    if(action === 'dec') cart[idx].qty = Math.max(1, cart[idx].qty - 1);
+    if(action === 'remove') cart.splice(idx, 1);
+    renderCart();
+  });
+
+  document.querySelectorAll('input[name="shipping"]').forEach(r => r.addEventListener('change', renderCart));
+  document.getElementById('cartBtn').addEventListener('click', () => { cartOverlay.classList.add('active'); renderCart(); });
+  document.getElementById('cartClose').addEventListener('click', () => cartOverlay.classList.remove('active'));
+  cartOverlay.addEventListener('click', (e) => { if(e.target === cartOverlay) cartOverlay.classList.remove('active'); });
+
+  // ---------- CHECKOUT (Stripe) ----------
+  checkoutBtn.addEventListener('click', async () => {
+    checkoutBtn.disabled = true;
+    checkoutBtn.textContent = 'Attendere...';
+    const shipping = getShipping();
+    try{
+      const res = await fetch('/.netlify/functions/create-checkout-session', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ items: cart, shipping })
+      });
+      const data = await res.json();
+      if(data.url){
+        window.location.href = data.url;
+      } else {
+        throw new Error('URL di pagamento non ricevuto');
+      }
+    } catch(err){
+      alert('Il pagamento non è ancora collegato. Segui le istruzioni nel file ISTRUZIONI-PAGAMENTI.txt per attivarlo.');
+      checkoutBtn.disabled = false;
+      checkoutBtn.textContent = 'Paga con carta';
+    }
+  });
+
+  renderCart();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stampa e cornice — federicoramella</title>
+<!-- Liberation Sans è un font di sistema (non richiede Google Fonts) -->
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --ink:#2E4874;
+    --blue:#2E4874;
+    --stone:#A8A8A8;
+    --hairline:#E5E5E5;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Liberation Sans', Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav{
+    max-width:1400px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px;
+  }
+  .logo{
+    font-family:'Liberation Sans', Arial, sans-serif;
+    font-size:20px; font-style:normal; font-weight:700;
+    color:var(--ink);
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    text-decoration:none;
+    cursor:pointer;
+  }
+  .nav-links{display:flex; gap:36px; list-style:none; align-items:center;}
+  .nav-links a{
+    color:var(--ink); text-decoration:none; font-size:12px; font-weight:600;
+    letter-spacing:.1em; text-transform:uppercase;
+  }
+  .nav-links a:hover{color:var(--blue);}
+  .nav-links a.current{border-bottom:2px solid var(--ink); padding-bottom:4px;}
+
+  /* ---------- CONTENUTO ---------- */
+  main{
+    max-width:760px;
+    margin:0 auto;
+    padding:80px 40px 100px;
+  }
+  main > p.lead{
+    font-size:16px; line-height:1.7; color:var(--ink);
+    margin-bottom:56px;
+  }
+  .info-block{
+    padding:40px 0;
+    border-top:1px solid var(--hairline);
+  }
+  .info-block:last-child{
+    border-bottom:1px solid var(--hairline);
+  }
+  .info-block h2{
+    font-size:13px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink); margin-bottom:16px;
+  }
+  .info-block p{
+    font-size:15px; line-height:1.7; color:var(--ink);
+  }
+  .info-block p + p{margin-top:12px;}
+  .info-block .detail{
+    font-size:13px; color:var(--stone); margin-top:10px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    max-width:1400px; margin:0 auto;
+    padding:60px 40px 80px;
+    border-top:1px solid var(--hairline);
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:16px;
+  }
+  footer a{
+    color:var(--ink); text-decoration:none;
+    border-bottom:1px solid var(--hairline);
+    font-size:16px; letter-spacing:.02em;
+  }
+  footer a:hover{border-color:var(--ink);}
+  .copyright{font-size:12px; letter-spacing:.04em; color:var(--stone); text-transform:uppercase;}
+
+  @media (max-width:700px){
+    .nav-links{display:none;}
+    main{padding:50px 20px 60px;}
+    footer{padding:40px 20px 60px; flex-direction:column; align-items:flex-start;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="index.html" class="logo">federicoramella</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">Chi sono</a></li>
+      <li><a href="stampa.html" class="current">Stampa e cornice</a></li>
+      <li><a href="index.html#contatti">Contatti</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <p class="lead">Ogni fotografia viene stampata e incorniciata artigianalmente prima della spedizione. Ecco come è fatta.</p>
+
+  <div class="info-block">
+    <h2>La stampa</h2>
+    <p>Le fotografie vengono stampate su carta fotografica di alta qualità, disponibile in finitura lucida od opaca a seconda dello scatto.</p>
+  </div>
+
+  <div class="info-block">
+    <h2>Il formato</h2>
+    <p>Ogni stampa viene realizzata in formato unico 30x40 cm, pensato per valorizzare il dettaglio e i colori degli scatti.</p>
+  </div>
+
+  <div class="info-block">
+    <h2>La cornice</h2>
+    <p>Le stampe vengono incorniciate a mano con cornici in legno naturale/chiaro, per un risultato elegante e adatto a qualsiasi ambiente.</p>
+  </div>
+
+  <div class="info-block">
+    <h2>Spedizione</h2>
+    <p>Ogni fotografia viene stampata, incorniciata e spedita solo dopo la conferma dell'ordine, con pagamento sicuro gestito da Stripe.</p>
+  </div>
+</main>
+
+<footer id="contatti">
+  <a href="mailto:fotoramella@gmail.com">fotoramella@gmail.com</a>
+  <span class="copyright">Tutti i diritti riservati © 2026 — federicoramella</span>
+</footer>
+
+</body>
+</html>
