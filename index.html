@@ -186,6 +186,10 @@
   }
   footer a:hover{border-color:var(--ink);}
   .copyright{font-size:12px; letter-spacing:.04em; color:var(--stone); text-transform:uppercase;}
+  .footer-contacts{display:flex; align-items:center; gap:20px; flex-wrap:wrap;}
+  .social-link{display:inline-flex; align-items:center; border-bottom:none !important;}
+  .social-link svg{width:20px; height:20px; stroke:var(--ink); transition:opacity .2s;}
+  .social-link:hover svg{opacity:.6;}
 
   @media (max-width:700px){
     .nav-links{display:none;}
@@ -305,7 +309,16 @@
 </section>
 
 <footer id="contatti">
-  <a href="mailto:fotoramella@gmail.com">fotoramella@gmail.com</a>
+  <div class="footer-contacts">
+    <a href="mailto:fotoramella@gmail.com">fotoramella@gmail.com</a>
+    <a class="social-link" href="https://www.instagram.com/federico_ramella_72" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2.5" y="2.5" width="19" height="19" rx="5"/>
+        <circle cx="12" cy="12" r="4.5"/>
+        <circle cx="17.5" cy="6.5" r="0.9" fill="var(--ink)" stroke="none"/>
+      </svg>
+    </a>
+  </div>
   <span class="copyright">Tutti i diritti riservati © 2026 — federicoramella</span>
 </footer>
 
