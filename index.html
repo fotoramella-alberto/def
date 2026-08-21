@@ -87,6 +87,17 @@
     .filters{padding:24px 20px 0; gap:20px; flex-wrap:wrap;}
   }
 
+  /* Telefono ruotato in orizzontale: schermo largo ma basso.
+     Stringiamo logo e menu così restano su una sola riga. */
+  @media (orientation:landscape) and (max-height:500px){
+    .nav{padding:12px 20px;}
+    .logo{font-size:14px; letter-spacing:.06em;}
+    .nav-links{gap:14px;}
+    .nav-links a{font-size:10px; letter-spacing:.03em;}
+    .cart-btn{width:30px; height:30px;}
+    .cart-count{width:15px; height:15px; font-size:9px; line-height:15px;}
+  }
+
   /* ---------- PHOTO LIST ---------- */
   main{
     max-width:1400px;
@@ -268,10 +279,9 @@
       <li><a href="stampa.html">Stampa e cornice</a></li>
       <li><a href="#contatti">Contatti</a></li>
       <li><button class="cart-btn" id="cartBtn" aria-label="Carrello">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="9" cy="21" r="1"></circle>
-          <circle cx="20" cy="21" r="1"></circle>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+          <path d="M6 10h12l1.2 10.5a2 2 0 0 1-2 2.5H6.8a2 2 0 0 1-2-2.5L6 10Z"></path>
         </svg>
         <span class="cart-count" id="cartCount">0</span>
       </button></li>
@@ -356,7 +366,7 @@
     {title:"", info:"", price:150, img:"webp/FED30.webp", category:"Vele"},
     {title:"Thendara 1937 Alexander Stephen & Sons", info:"Genere — Luogo", price:150, img:"webp/FED31.webp", category:"Vele"},
     // ---- PAESAGGI: sostituisci titolo, info, prezzo e img con le tue foto ----
-    {title:"", info:"Promontorio Porto Maurizio", price:150, img:"paesaggio1", category:"Paesaggi"},
+    {title:"", info:"Paesaggio — Luogo", price:150, img:"paesaggio1", category:"Paesaggi"},
     {title:"", info:"Paesaggio — Luogo", price:150, img:"paesaggio2", category:"Paesaggi"},
     {title:"", info:"Paesaggio — Luogo", price:150, img:"paesaggio3", category:"Paesaggi"},
     // ---- CETACEI: sostituisci titolo, info, prezzo e img con le tue foto ----
@@ -368,7 +378,7 @@
 
   function renderGrid(filterCat){
     grid.innerHTML = '';
-    const filtered = filterCat === 'tutte' ? works : works.filter(w => w.category === filterCat);
+    const filtered = filterCat === 'Tutte' ? works : works.filter(w => w.category === filterCat);
     filtered.forEach((w) => {
       const i = works.indexOf(w);
       const fig = document.createElement('figure');
