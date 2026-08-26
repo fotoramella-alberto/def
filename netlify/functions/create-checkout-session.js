@@ -10,7 +10,7 @@ exports.handler = async (event) => {
   }
 
   try {
-    const { items, shipping } = JSON.parse(event.body);
+    const { items, shipping, customer } = JSON.parse(event.body);
 
     if (!items || items.length === 0) {
       return { statusCode: 400, body: JSON.stringify({ error: 'Carrello vuoto' }) };
@@ -42,6 +42,15 @@ exports.handler = async (event) => {
       mode: 'payment',
       payment_method_types: ['card'],
       line_items,
+      customer_email: customer && customer.email ? customer.email : undefined,
+      metadata: customer ? {
+        nome: customer.nome || '',
+        cognome: customer.cognome || '',
+        indirizzo: customer.via || '',
+        citta: customer.citta || '',
+        cap: customer.cap || '',
+        provincia: customer.provincia || '',
+      } : {},
       success_url: `${siteUrl}/successo.html`,
       cancel_url: `${siteUrl}/`,
     });
